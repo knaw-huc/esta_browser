@@ -80,7 +80,7 @@ export interface IVoyage {
     last_mutation: string,
     summary: string,
     year: string,
-    subvoyages: ISubVoyage[]
+    sub_voyage: ISubVoyage[]
 }
 
 export interface ICargo {
@@ -106,6 +106,7 @@ export interface ISubVoyage {
     sub_dept_date_as_source: string,
     sub_dept_date_status: string,
     sub_arrival_location: string,
+    sub_arrival_location_standardized: string,
     sub_arrival_location_status: string,
     sub_arrival_date_as_source: string,
     sub_arrival_date_status: string,

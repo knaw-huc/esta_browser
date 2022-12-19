@@ -8,7 +8,7 @@ import Subvoyage from "../elements/subvoyage";
 
 function Detail() {
     const[loading, setLoading] = useState(true);
-    const[voyage, setVoyage] = useState<IVoyage>({last_mutation: "", year: "", summary: "", subvoyages: []});
+    const[voyage, setVoyage] = useState<IVoyage>({last_mutation: "", year: "", summary: "", sub_voyage: []});
     const params = useParams();
 
     async function fetch_data() {
@@ -37,7 +37,7 @@ function Detail() {
                         <div>{voyage.year}</div>
                     </div>
                     <h2>Subvoyages</h2>
-                    {voyage.subvoyages.map((item, index) => {
+                    {voyage.sub_voyage.map((item, index) => {
                         return (
                             <Subvoyage subvoyage={item} key={index} />
                         )

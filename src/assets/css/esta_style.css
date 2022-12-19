@@ -2068,7 +2068,7 @@ color: #999999;
 }
 
 .bgColorBrand1 {
-background-color: #000000;
+background-color: #196f67;
 color: #fff;
 font-family: Arial;
 }
@@ -2456,7 +2456,7 @@ height: 60px;
 
 .voyageHeader{
 border: 1px solid #999999;
-background-color: #eeeeee;
+background-color: #ede9e1;
 font-family: "Roboto", sans-serif;
 padding: 4px 6px;
 font-size: 0.9em;
@@ -2473,7 +2473,7 @@ font-weight: bold;
 padding: 4px 6px;
 font-size: 0.9em;
 border: 1px solid #999999;
-background-color: #eeeeee;
+background-color: #ede9e1;
 cursor: pointer;
 }
 
