@@ -22,6 +22,8 @@ function Subvoyage(props: {subvoyage: ISubVoyage}) {
                 <div className="leftColumn"><h3>Departure</h3>
                     <div className="subVoyageBodyLabel">Location of departure</div>
                     <div>{props.subvoyage.sub_dept_location}</div>
+                    <div className="subVoyageBodyLabel">Location of departure standardized</div>
+                    <div>{props.subvoyage.sub_dept_location_standardized}</div>
                     <div className="subVoyageBodyLabel">Status location of departure</div>
                     <div>{props.subvoyage.sub_dept_location_status}</div>
                     <div className="subVoyageBodyLabel">Date of departure as source</div>
@@ -32,6 +34,8 @@ function Subvoyage(props: {subvoyage: ISubVoyage}) {
                 <div className="rightColumn"><h3>Arrival</h3>
                     <div className="subVoyageBodyLabel">Location of arrival</div>
                     <div>{props.subvoyage.sub_arrival_location}</div>
+                    <div className="subVoyageBodyLabel">Location of arrival standardized</div>
+                    <div>{props.subvoyage.sub_arrival_location_standardized}</div>
                     <div className="subVoyageBodyLabel">Status location of arrival</div>
                     <div>{props.subvoyage.sub_arrival_date_status}</div>
                     <div className="subVoyageBodyLabel">Date of arrival as source</div>

@@ -1,9 +1,22 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
+import {ISearchObject} from "../misc/interfaces";
+import {Base64} from "js-base64";
 
 
 function PageHeader() {
     const navigate = useNavigate();
+
+    function goSearch() {
+        let searchStruc: ISearchObject = {
+            searchvalues: [],
+            page: 1,
+            page_length: 30,
+            sortorder: "titel"
+        };
+        const code: string = Base64.encode(JSON.stringify(searchStruc));
+        navigate("search/" + code);
+    }
     return (
         <div>
             <div className="hcContentContainer bgColorBrand1 hcMarginBottom1">
@@ -15,7 +28,8 @@ function PageHeader() {
                     </div>
 
                     <nav>
-                        <a href="">Test version</a>
+                        <a onClick={() => goSearch()}>Browse</a>
+                        <a onClick={() => {window.open("https://esta.sd.di.huc.knaw.nl/")}}>Login</a>
                     </nav>
                 </header>
             </div>

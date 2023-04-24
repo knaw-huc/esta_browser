@@ -148,8 +148,8 @@ function Search() {
                 <div className="hcLayoutFacets">
                     <FreeTextFacet add={sendCandidate}/>
                     <ListFacet parentCallback={sendCandidate} name="Year" field="year"/>
-                    <ListFacet parentCallback={sendCandidate} name="Place of departure" field="sub_voyage.sub_dept_location"/>
-                    <ListFacet parentCallback={sendCandidate} name="Place of arrival" field="sub_voyage.sub_arrival_location"/>
+                    <ListFacet parentCallback={sendCandidate} name="Place of departure" field="sub_voyage.sub_dept_location_standardized"/>
+                    <ListFacet parentCallback={sendCandidate} name="Place of arrival" field="sub_voyage.sub_arrival_location_standardized"/>
                     <ListFacet parentCallback={sendCandidate} name="Commodity" field="sub_voyage.commodities.commodity"/>
                 </div>
                 <div className="hcLayoutResults">

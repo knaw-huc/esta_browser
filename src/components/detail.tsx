@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 import {SERVICE, HOME} from "../misc/config";
 import {IVoyage} from "../misc/interfaces";
 import Subvoyage from "../elements/subvoyage";
+import EstaMap from "../elements/estaMap";
 
 
 function Detail() {
@@ -19,10 +20,15 @@ function Detail() {
         setLoading(false);
     }
 
+
+
+
     useEffect(() => {
        fetch_data()
     }, [loading]);
 
+
+    // @ts-ignore
     return (
         <div className="hcContentContainer">
             {loading ? (
@@ -35,6 +41,7 @@ function Detail() {
                         <div>{voyage.summary}</div>
                         <div className="voyageHeaderLabel">Year</div>
                         <div>{voyage.year}</div>
+                        <EstaMap voyage={voyage}/>
                     </div>
                     <h2>Subvoyages</h2>
                     {voyage.sub_voyage.map((item, index) => {

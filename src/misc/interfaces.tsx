@@ -102,6 +102,9 @@ export interface ISubVoyage {
     subvoyage_id: string,
     subvoyage_type: string,
     sub_dept_location: string,
+    sub_dept_location_standardized: string,
+    dep_coords: ICoords[]
+    arr_coords: ICoords[]
     sub_dept_location_status: string,
     sub_dept_date_as_source: string,
     sub_dept_date_status: string,
@@ -118,6 +121,11 @@ export interface ISubVoyage {
     slaves: ISlaves
 }
 
+export interface ICoords {
+    location_latitude: number,
+    location_longitude: number
+}
+
 export interface ISlaves {
     slaves_id: string,
     slaves_total: string,
@@ -127,6 +135,16 @@ export interface ISlaves {
     slaves_notes: string,
     slaves_source: string,
     groups: ISlaveGroup[]
+}
+
+export interface ITrip {
+    Rows: number,
+    sub_dept_location_standardized: string,
+    dep_lat: number,
+    dep_long: number,
+    sub_arrival_location_standardized: string,
+    arr_lat: number,
+    arr_long: number
 }
 
 export interface ISlaveGroup {
