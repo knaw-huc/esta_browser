@@ -33,9 +33,9 @@ function Home() {
         navigate("search/" + code);
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         fetch_data();
-    }, [loading]);
+    }, [loading]);*/
 
     return (
         <div className="homeContainer">
@@ -44,7 +44,7 @@ function Home() {
                     url="https://d.tile.openstreetmap.de/{z}/{x}/{y}.png"
                     attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 />
-                {!loading && (
+               {/* {!loading && (
                     <Fragment>
                         {data.map((item, index) => {
                             return (
@@ -54,7 +54,7 @@ function Home() {
                             )
                         })}
                     </Fragment>
-                )}
+                )}*/}
             </MapContainer>
 
 
