@@ -45,7 +45,11 @@ export interface IResultItem {
 
 export interface IresSubVoyage {
     sub_arrival_location: string,
-    sub_dept_location: string
+    sub_dept_location: string,
+    dep_latitude: number,
+    dep_logitude: number,
+    arrival_latitude: number,
+    arrival_longitude: number
 }
 
 export interface ILocatie {

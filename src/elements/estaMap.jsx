@@ -1,10 +1,26 @@
 import React from "react";
+import {useEffect} from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup, Polyline} from 'react-leaflet';
+import 'leaflet'
 import 'leaflet-arrowheads';
 import "../assets/css/leaflet.css";
 
 
 function EstaMap(voyage) {
+    var L = window.L;
+    function PolylineDecorator({polyline,color }) {
+        const map = useMap();
+        useEffect(() => {
+            if (!map) return;
+            var x = L.polyline(polyline, {color}).arrowheads({ size: '5%' });
+            x.addTo(map);
+        }, [map]);
+
+        return null;
+    }
+
+
+
     return (
         <MapContainer center={[-8.511794, 117.010471]} zoom={3}>
             <TileLayer
@@ -12,7 +28,6 @@ function EstaMap(voyage) {
                 attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             />
             {voyage.voyage.sub_voyage.map((item) => {
-                console.log(item);
                 if (item.dep_coords[0].location_latitude !== null && item.dep_coords[0].location_longitude !== null && item.arr_coords[0].location_latitude !== null && item.arr_coords[0].location_longitude !== null) {
                     return <Polyline positions={[
                         [item.dep_coords[0].location_latitude, item.dep_coords[0].location_longitude], [item.arr_coords[0].location_latitude, item.arr_coords[0].location_longitude],

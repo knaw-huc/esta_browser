@@ -16,6 +16,7 @@ import FreeTextFacet from "../facets/freeTextFacet";
 import ListFacet from "../facets/listFacet";
 import {SERVICE, HOME} from "../misc/config";
 import VoyageList from "../elements/voyageList";
+import SearchMap from "../elements/searchMap";
 import {Fragment} from "react";
 
 
@@ -27,13 +28,14 @@ function Search() {
     const [refresh, setRefresh] = useState(true);
     const [result, setResult] = useState<IResultList>({amount: 0, pages: 0, items: []});
     const [numberOfItems, setNumberOfItems] = useState(0);
+    const [showMap, setShowMap] = useState(true);
     let navigate = useNavigate();
     document.title = "Search | ESTA";
 
     let searchBuffer: ISearchObject = {
         searchvalues: parameters.searchvalues,
         page: page,
-        page_length: 500,
+        page_length: 2000,
         sortorder: "year",
     };
 
@@ -159,6 +161,13 @@ function Search() {
                     <div className="hcMarginBottom2">
                         <div className="hcSmallTxt hcTxtColorGreyMid">Selected facets:
                             <span className="hcFacetReset hcClickable" onClick={resetFacets}>Reset facets</span>
+                            {showMap ? (
+                                <span className="hcFacetReset hcClickable" onClick={() => {setShowMap(false)}}>Hide map</span>
+                            ) : (
+                                <span className="hcFacetReset hcClickable" onClick={() => {setShowMap(true)}}>Show map</span>
+                            )}
+
+
                         </div>
                         {searchStruc.searchvalues.length === 0 ? (
                             <Fragment><span className="hcSelectedFacet"><span
@@ -177,6 +186,7 @@ function Search() {
                             })
                         )}
                     </div>
+                    {showMap && (<SearchMap data={result}/>)}
                     {/*<div className="hcList">
                         <div className="hcListHeader">
                             <div className="hcLabel">Manuscripts</div>

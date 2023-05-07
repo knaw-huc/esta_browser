@@ -23,6 +23,8 @@ function Detail() {
 
 
 
+
+
     useEffect(() => {
        fetch_data()
     }, [loading]);

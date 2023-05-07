@@ -5,7 +5,6 @@ import img from "../assets/img/manuscript.jpg";
 
 function VoyageListDetails(props: {result: IResultItem}) {
     let navigate = useNavigate();
-    console.log(props.result);
 
     return (<div className="hcResultListDetail">
         <h2>{props.result.summary}</h2>
