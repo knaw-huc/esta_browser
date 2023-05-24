@@ -8,11 +8,11 @@ import "../assets/css/leaflet.css";
 
 function EstaMap(voyage) {
     var L = window.L;
-    function PolylineDecorator({polyline,color }) {
+    function PolylineDecorator({positions,color}) {
         const map = useMap();
         useEffect(() => {
             if (!map) return;
-            var x = L.polyline(polyline, {color}).arrowheads({ size: '5%' });
+            var x = L.polyline(positions, {color}).arrowheads({ size: '5%' });
             x.addTo(map);
         }, [map]);
 
@@ -29,9 +29,9 @@ function EstaMap(voyage) {
             />
             {voyage.voyage.sub_voyage.map((item) => {
                 if (item.dep_coords[0].location_latitude !== null && item.dep_coords[0].location_longitude !== null && item.arr_coords[0].location_latitude !== null && item.arr_coords[0].location_longitude !== null) {
-                    return <Polyline positions={[
+                    return <PolylineDecorator positions={[
                         [item.dep_coords[0].location_latitude, item.dep_coords[0].location_longitude], [item.arr_coords[0].location_latitude, item.arr_coords[0].location_longitude],
-                    ]} color={'#BB0000'} weight={1} />
+                    ]} color={'#BB0000'} />
                 }})}
         </MapContainer>
     )
