@@ -9,11 +9,12 @@ import {
     ISendPage,
     IResetFacets,
     IResultList,
-    IRemoveFacet
+    IRemoveFacet, ISetID, ISendRangeCandidate
 } from "../misc/interfaces";
 import {Base64} from "js-base64";
 import FreeTextFacet from "../facets/freeTextFacet";
 import ListFacet from "../facets/listFacet";
+import SliderFacet from "../facets/sliderFacet";
 import {SERVICE, HOME} from "../misc/config";
 import VoyageList from "../elements/voyageList";
 import SearchMap from "../elements/searchMap";
@@ -24,25 +25,36 @@ function Search() {
     const params = useParams();
     const parameters: ISearchObject = JSON.parse(Base64.decode(params.code as string));
     const [loading, setLoading] = useState(true);
-    const [page, setPage] = useState(parameters.page);
+    const [page, setPage] = useState(1);
     const [refresh, setRefresh] = useState(true);
     const [result, setResult] = useState<IResultList>({amount: 0, pages: 0, items: []});
     const [numberOfItems, setNumberOfItems] = useState(0);
     const [showMap, setShowMap] = useState(true);
+    const [currentID, setCurrentID] = useState(getVoyageID());
     let navigate = useNavigate();
     document.title = "Search | ESTA";
 
     let searchBuffer: ISearchObject = {
         searchvalues: parameters.searchvalues,
         page: page,
-        page_length: 2000,
+        page_length: 4000,
         sortorder: "year",
     };
 
-    let facets = parameters.searchvalues;
-
     const [searchStruc, setSearchStruc] = useState(searchBuffer);
     const cross: string = "[x]";
+    const setAnchor: ISetID = (id: string) => {
+        setCurrentID(id);
+        localStorage.setItem("voyage", id);
+    }
+
+    function getVoyageID(): string {
+        let RetVal = "0"
+        if (localStorage.getItem("voyage") !== null) {
+            RetVal = localStorage.getItem("voyage") as string;
+        }
+        return RetVal
+    }
 
     async function fetch_data() {
         const url = SERVICE + "/browse";
@@ -53,7 +65,7 @@ function Search() {
                 'Content-Type': 'application/json',
                 'Origin': HOME
             },
-            body: JSON.stringify(searchStruc)
+            body: JSON.stringify(parameters)
         });
         const json: IResultList = await response.json();
         setResult(json);
@@ -86,6 +98,7 @@ function Search() {
         }
         setSearchStruc(searchBuffer);
         setRefresh(!refresh);
+        setAnchor("0");
         navigate('/search/' + Base64.toBase64(JSON.stringify(searchStruc)));
         window.scroll(0, 0);
     }
@@ -95,22 +108,25 @@ function Search() {
         searchBuffer.page = 1;
         searchBuffer.searchvalues = [];
         setSearchStruc(searchBuffer);
-        navigate('#search/' + Base64.toBase64(JSON.stringify(searchStruc)));
+        navigate('/search/' + Base64.toBase64(JSON.stringify(searchStruc)));
+        setAnchor("0");
         window.scroll(0, 0);
         setRefresh(!refresh);
     }
 
-    const sendCandidate: ISendCandidate = (candidate: IFacetCandidate) => {
+
+    const sendCandidate: ISendCandidate = function (candidate: IFacetCandidate, replace: boolean = false)  {
         setPage(1);
+        setAnchor("0");
         if (parameters.searchvalues.length === 0) {
             parameters.searchvalues = [{
                 name: candidate.facet,
                 field: candidate.field,
                 values: [candidate.candidate]
             } as ISearchValues];
-            parameters.page = 1;
-            setSearchStruc(searchBuffer);
-            window.location.href = '#search/' + Base64.toBase64(JSON.stringify(searchStruc));
+            //parameters.page = 1;
+            setSearchStruc(parameters);
+            //navigate('/search/' + Base64.toBase64(JSON.stringify(parameters)));
         } else {
             if (typeof parameters.searchvalues === "object") {
                 let found: boolean = false;
@@ -118,7 +134,13 @@ function Search() {
                     if (item.name === candidate.facet) {
                         found = true;
                         if (!item.values.includes(candidate.candidate)) {
-                            item.values.push(candidate.candidate);
+                            if (replace) {
+                                item.values = [candidate.candidate];
+                            }
+                            else {
+                                item.values.push(candidate.candidate);
+                            }
+
                         }
                     }
                 });
@@ -132,14 +154,19 @@ function Search() {
             }
             searchStruc.page = 1;
         }
-        goToPage(page);
+
+        setCurrentID("");
         window.scroll(0, 0);
+        goToPage(page);
         setRefresh(!refresh);
     }
 
     useEffect(() => {
         fetch_data();
     }, [refresh]);
+
+    const anchor: string = "currentVoyage_" + currentID;
+
 
     return (
         <div className="hcContentContainer">
@@ -149,9 +176,10 @@ function Search() {
             <div className="hcLayoutFacet-Result hcBasicSideMargin hcMarginBottom15">
                 <div className="hcLayoutFacets">
                     <FreeTextFacet add={sendCandidate}/>
-                    <ListFacet parentCallback={sendCandidate} name="Year" field="year"/>
+                    <SliderFacet parentCallback={sendCandidate} name="Year" field="year" from={1620} to={1860}/>
                     <ListFacet parentCallback={sendCandidate} name="Place of departure" field="sub_voyage.sub_dept_location_standardized"/>
                     <ListFacet parentCallback={sendCandidate} name="Place of arrival" field="sub_voyage.sub_arrival_location_standardized"/>
+                    <SliderFacet parentCallback={sendCandidate} name="Number of enslaved" field="sub_voyage.slaves_total" from={0} to={4000}/>
                     <ListFacet parentCallback={sendCandidate} name="Commodity" field="sub_voyage.commodities.commodity"/>
                 </div>
                 <div className="hcLayoutResults">
@@ -169,11 +197,11 @@ function Search() {
 
 
                         </div>
-                        {searchStruc.searchvalues.length === 0 ? (
+                        {parameters.searchvalues.length === 0 ? (
                             <Fragment><span className="hcSelectedFacet"><span
                                 className="hcSelectedFacetType">None</span></span></Fragment>
                         ) : (
-                            facets.map((item: ISearchValues) => {
+                            parameters.searchvalues.map((item: ISearchValues) => {
                                 return (
                                     <span className="hcSelectedFacet"><span
                                         className="hcSelectedFacetType">{item.name}: </span>
@@ -193,7 +221,7 @@ function Search() {
                         </div>
                     </div>*/}
                     {loading ? (<div className="hcResultListLoading">Loading...</div>) : (
-                        <VoyageList result={result}/>)}
+                        <VoyageList result={result} setAnchor={setAnchor} currentID={currentID}/>)}
                 </div>
             </div>
         </div>

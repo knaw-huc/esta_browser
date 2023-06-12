@@ -23,6 +23,10 @@ export interface IFacetCandidate {
 }
 
 export interface ISendCandidate {
+    (data: IFacetCandidate, replace?: boolean):void
+}
+
+export interface ISendRangeCandidate {
     (data: IFacetCandidate):void
 }
 
@@ -74,6 +78,10 @@ export interface IResultList {
 
 export interface ISendPage {
     (data: number): void
+}
+
+export interface ISetID {
+    (id: string): void
 }
 
 export interface IResetFacets {

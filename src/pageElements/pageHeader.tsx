@@ -11,10 +11,11 @@ function PageHeader() {
         let searchStruc: ISearchObject = {
             searchvalues: [],
             page: 1,
-            page_length: 30,
-            sortorder: "titel"
+            page_length: 4000,
+            sortorder: "year"
         };
         const code: string = Base64.encode(JSON.stringify(searchStruc));
+        localStorage.setItem("voyage", "0");
         navigate("search/" + code);
     }
     return (

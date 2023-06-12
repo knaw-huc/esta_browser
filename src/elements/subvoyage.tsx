@@ -46,7 +46,7 @@ function Subvoyage(props: {subvoyage: ISubVoyage}) {
                 </div>
                 <hr/>
                 <div>
-                    <div className="subVoyageBodyLabel">Type</div>
+                    <div className="subVoyageBodyLabel">Subvoyage type</div>
                     <div>{props.subvoyage.subvoyage_type}</div>
                     <div className="subVoyageBodyLabel">Source</div>
                     <div>{fillEmpty(props.subvoyage.sub_source)}</div>

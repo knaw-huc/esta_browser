@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useRef} from "react";
+import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {IResultItem} from "../misc/interfaces";
+import {IResultItem, ISetID} from "../misc/interfaces";
 import img from "../assets/img/manuscript.jpg";
 
-function VoyageListDetails(props: {result: IResultItem}) {
+function VoyageListDetails(props: {result: IResultItem, setAnchor: ISetID, currentID: string}) {
     let navigate = useNavigate();
+    let id = props.result.voyage_id as string;
 
-    return (<div className="hcResultListDetail">
+    const scRef = useRef<HTMLDivElement>(document.createElement("div"));
+    useEffect(() => {
+        if (props.currentID === props.result.voyage_id) {
+            scRef.current.scrollIntoView({});
+        }
+    });
+
+    return (<div ref={scRef} className={`hcResultListDetail ref_${props.result.voyage_id}`}>
         <h2>{props.result.summary}</h2>
         <div>{props.result.year}</div>
         <div className="detailLine">{props.result.sub_voyage.map((item, index) => {
@@ -17,9 +26,14 @@ function VoyageListDetails(props: {result: IResultItem}) {
             <ul className="ManuscriptListBtns">
                 <li onClick={() => {
                     window.scroll(0, 0);
+                    props.setAnchor(props.result.voyage_id);
                     navigate('/detail/' + props.result.voyage_id)}
                 }>Details</li>
             </ul>
+            <div className="navUpArrow" onClick={() => {
+                window.scroll(0,0);
+                props.setAnchor("0");
+            }}>&#8593;</div>
         </div>
     </div>);
 }
