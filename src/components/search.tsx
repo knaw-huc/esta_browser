@@ -180,7 +180,6 @@ function Search() {
                     <ListFacet parentCallback={sendCandidate} name="Place of departure" field="sub_voyage.sub_dept_location_standardized"/>
                     <ListFacet parentCallback={sendCandidate} name="Place of arrival" field="sub_voyage.sub_arrival_location_standardized"/>
                     <SliderFacet parentCallback={sendCandidate} name="Number of enslaved" field="sub_voyage.slaves_total" from={0} to={4000}/>
-                    <ListFacet parentCallback={sendCandidate} name="Commodity" field="sub_voyage.commodities.commodity"/>
                 </div>
                 <div className="hcLayoutResults">
                     <div className="hcResultsHeader hcMarginBottom1">
