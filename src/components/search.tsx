@@ -13,12 +13,12 @@ import {
 } from "../misc/interfaces";
 import {Base64} from "js-base64";
 import FreeTextFacet from "../facets/freeTextFacet";
-import ListFacet from "../facets/listFacet";
 import SliderFacet from "../facets/sliderFacet";
 import {SERVICE, HOME} from "../misc/config";
 import VoyageList from "../elements/voyageList";
 import SearchMap from "../elements/searchMap";
 import {Fragment} from "react";
+import FilteredListFacet from "../facets/filteredListFacet";
 
 
 function Search() {
@@ -177,8 +177,8 @@ function Search() {
                 <div className="hcLayoutFacets">
                     <FreeTextFacet add={sendCandidate}/>
                     <SliderFacet parentCallback={sendCandidate} name="Year" field="year" from={1620} to={1860}/>
-                    <ListFacet parentCallback={sendCandidate} name="Place of departure" field="sub_voyage.sub_dept_location_standardized"/>
-                    <ListFacet parentCallback={sendCandidate} name="Place of arrival" field="sub_voyage.sub_arrival_location_standardized"/>
+                    <FilteredListFacet parentCallback={sendCandidate} name="Place of departure" field="sub_voyage.sub_dept_location_standardized"/>
+                    <FilteredListFacet parentCallback={sendCandidate} name="Place of arrival" field="sub_voyage.sub_arrival_location_standardized"/>
                     <SliderFacet parentCallback={sendCandidate} name="Number of enslaved" field="sub_voyage.slaves_total" from={0} to={4000}/>
                 </div>
                 <div className="hcLayoutResults">
