@@ -11,11 +11,12 @@ function FilteredListFacet(props: {parentCallback: ISendCandidate, name: string,
     const [data, setData] = useState<IFacetValue[]>([]);
     const [url, setUrl] = useState(SERVICE + "/filter-facet?name=" + props.field + "&amount=10&filter=" + filter);
     const [loading, setLoading] = useState(true);
-    const [hidden, setHidden] = useState(true);
+    const [hidden, setHidden] = useState(false);
+    const [refresh, setRefresh] = useState(true);
 
 
     async function fetchData() {
-        setUrl(SERVICE + "/filter-facet?name=" + props.field + "&amount=10&filter=" + filter);
+        const url = SERVICE + "/filter-facet?name=" + props.field + "&amount=10&filter=" + filter;
         const response = await fetch(url);
         const json = await response.json();
         setData(json);
@@ -25,10 +26,11 @@ function FilteredListFacet(props: {parentCallback: ISendCandidate, name: string,
 
 
     function handleChange(e: React.FormEvent<HTMLInputElement>) {
-        if (e.currentTarget.value.length > 1)
-        {
+        //if (e.currentTarget.value.length > 1)
+        //{
             setFilter(e.currentTarget.value);
-        }
+            setRefresh(!refresh)
+        //}
     }
 
     function sendCandidate(value: string) {
@@ -37,15 +39,15 @@ function FilteredListFacet(props: {parentCallback: ISendCandidate, name: string,
 
     useEffect(() => {
         fetchData();
-    }, [filter]);
+    }, [refresh]);
 
     return (
         <div className="hcFacet">
             <div className="hcFacetTitle">
-                <span>Type</span>
+                <span>{props.name}</span>
             </div>
 
-            <div className="hcFacetFilter"><input type="text" name="" onChange={handleChange} id="shipMasterFilter" placeholder="Type to filter"/></div>
+            <div className="hcFacetFilter"><input type="text" name="place" onChange={handleChange} id="place" placeholder="Type to filter"/></div>
             {!loading ? (<div className="hcFacetItems">
                     {data.map((item, index) => {
                         return (<div key={index} className="hcFacetItem"  onClick={() => {sendCandidate(item.key)}}><div className="checkBoxLabel"> {item.key} ({item.doc_count})</div></div>);

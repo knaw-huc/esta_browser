@@ -6,7 +6,7 @@ import {SERVICE} from "../misc/config";
 import {Slider} from "@mui/material";
 
 function SliderFacet(props: {parentCallback: ISendCandidate, name: string, field: string, from: number, to: number}) {
-    const [hidden, setHidden] = useState(true);
+    const [hidden, setHidden] = useState(false);
     const [value, setValue] = React.useState<number[]>([props.from, props.to]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
@@ -22,9 +22,6 @@ function SliderFacet(props: {parentCallback: ISendCandidate, name: string, field
         <div className="hcFacet">
             <div className="hcFacetTitle" onClick={() => setHidden(!hidden)}>
                 <span>{props.name}</span>
-                <span className="hcIconHelp">
-                    {hidden ? (<Fragment>+</Fragment>) : (<Fragment>-</Fragment>)}
-                </span>
             </div>
             {!hidden &&
             <div><div className="hcSlider">

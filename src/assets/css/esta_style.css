@@ -1683,6 +1683,8 @@ margin-bottom: 1rem;
 max-width: 250px;
 font-size: 0.85rem;
 font-family: Arial;
+border-bottom: 1px solid #bbbbbb;
+padding-bottom: 1rem;
 }
 
 .hcSlider {
